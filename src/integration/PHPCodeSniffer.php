@@ -14,7 +14,7 @@ class PHPCodeSniffer extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return 'PHPCodeSniffer';
     }
@@ -22,7 +22,7 @@ class PHPCodeSniffer extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getIgnoredArgument()
+    public function getIgnoredArgument() : string
     {
         if (!empty($this->ignoredPaths)) {
             return '--ignore=' . implode(',', $this->ignoredPaths) . ' ';
@@ -33,7 +33,7 @@ class PHPCodeSniffer extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getCommand($targetPaths)
+    public function getCommand(array $targetPaths) : string
     {
         return $this->binariesPath . 'phpcs -p --standard=PSR2 --report=xml '
             . $this->getIgnoredArgument() . '--report-file="'
@@ -43,7 +43,7 @@ class PHPCodeSniffer extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    protected function addIssuesFromXml(Reader $xml)
+    protected function addIssuesFromXml(Reader $xml) : void
     {
         $xmlArray = $xml->parse();
 

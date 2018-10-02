@@ -8,7 +8,7 @@ class JsonOutput extends AbstractOutput
     /**
      * @inheritdoc
      */
-    public function result(AnalysisResult $result)
+    public function result(AnalysisResult $result) : void
     {
         $this->cli->out(json_encode($result->toArray()));
     }

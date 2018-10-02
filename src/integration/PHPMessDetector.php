@@ -14,7 +14,7 @@ class PHPMessDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return 'PHPMessDetector';
     }
@@ -22,7 +22,7 @@ class PHPMessDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getIgnoredArgument()
+    public function getIgnoredArgument() : string
     {
         if (!empty($this->ignoredPaths)) {
             return '--exclude ' . implode(',', $this->ignoredPaths) . ' ';
@@ -33,7 +33,7 @@ class PHPMessDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getCommand($targetPaths)
+    public function getCommand(array $targetPaths) : string
     {
         return $this->binariesPath . 'phpmd ' . implode(',', $targetPaths) . ' '
             . 'xml cleancode,codesize,controversial,design,naming,unusedcode '
@@ -44,7 +44,7 @@ class PHPMessDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    protected function addIssuesFromXml(Reader $xml)
+    protected function addIssuesFromXml(Reader $xml) : void
     {
         $xmlArray = $xml->parse();
 

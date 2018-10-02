@@ -22,7 +22,7 @@ class HtmlOutput extends AbstractOutput implements TriggerableInterface
     /**
      * @inheritdoc
      */
-    public function result(AnalysisResult $result)
+    public function result(AnalysisResult $result) : void
     {
         $this->cli->br();
         $this->cli->inline('Writing HTML report in "./phphound/"... ');
@@ -39,9 +39,10 @@ class HtmlOutput extends AbstractOutput implements TriggerableInterface
     /**
      * Create HTML report index page.
      * @param AnalysisResult $result result data object.
+     * @param History $history
      * @return void
      */
-    protected function writeIndexHtml(AnalysisResult $result, History $history)
+    protected function writeIndexHtml(AnalysisResult $result, History $history) : void
     {
         $files = [];
 
@@ -75,7 +76,7 @@ class HtmlOutput extends AbstractOutput implements TriggerableInterface
      * @param array $lines lines with their issues.
      * @return void
      */
-    protected function writeFileHtml($phpFilePath, $lines)
+    protected function writeFileHtml(string $phpFilePath, array $lines) : void
     {
         $highlighter = new FileHighlighter($phpFilePath, $lines);
         $fileHtml = $this->renderView(
@@ -100,7 +101,7 @@ class HtmlOutput extends AbstractOutput implements TriggerableInterface
      * @param array $data variables required by view file.
      * @return string output HTML.
      */
-    protected function renderView($view, $data)
+    protected function renderView(string $view, array $data) : string
     {
         $date = new DateTime;
         $content = $this->getPlatesEngine()->render($view, $data);
@@ -121,7 +122,7 @@ class HtmlOutput extends AbstractOutput implements TriggerableInterface
      * Configure and return Plates engine.
      * @return Engine Plates engine instance.
      */
-    protected function getPlatesEngine()
+    protected function getPlatesEngine() : Engine
     {
         if (null === $this->platesEngine) {
             $this->platesEngine = new Engine(__DIR__ . '/../templates');
@@ -134,7 +135,7 @@ class HtmlOutput extends AbstractOutput implements TriggerableInterface
      * Get output directory.
      * @return string output directory path.
      */
-    protected function getOutputDirectory()
+    protected function getOutputDirectory() : string
     {
         $directory = $this->outputDirectory . '/phphound';
 

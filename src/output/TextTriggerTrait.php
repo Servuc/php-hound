@@ -15,7 +15,7 @@ trait TextTriggerTrait
      * @param string|null $message optional message.
      * @return void
      */
-    public function trigger($eventType, $message = null)
+    public function trigger(int $eventType, $message = null) : void
     {
         switch ($eventType) {
             case Analyser::EVENT_STARTING_ANALYSIS:

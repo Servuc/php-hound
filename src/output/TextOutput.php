@@ -10,7 +10,7 @@ class TextOutput extends AbstractOutput implements TriggerableInterface
     /**
      * @inheritdoc
      */
-    public function result(AnalysisResult $result)
+    public function result(AnalysisResult $result) : void
     {
         foreach ($result->toArray() as $fileName => $lines) {
             $this->cli->br();
@@ -39,7 +39,7 @@ class TextOutput extends AbstractOutput implements TriggerableInterface
      * @param array[] $file
      * @return integer number of issues in all lines
      */
-    private function countIssues($file)
+    private function countIssues(array $file) : int
     {
         $counter = 0;
 

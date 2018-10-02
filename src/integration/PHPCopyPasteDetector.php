@@ -14,7 +14,7 @@ class PHPCopyPasteDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return 'PHPCopyPasteDetector';
     }
@@ -22,7 +22,7 @@ class PHPCopyPasteDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getIgnoredArgument()
+    public function getIgnoredArgument() : string
     {
         if (!empty($this->ignoredPaths)) {
             return '--exclude={' . implode(',', $this->ignoredPaths) . '} ';
@@ -33,7 +33,7 @@ class PHPCopyPasteDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    public function getCommand($targetPaths)
+    public function getCommand(array $targetPaths) : string
     {
         return $this->binariesPath . 'phpcpd '
             . implode(' ', $targetPaths) . ' '
@@ -44,7 +44,7 @@ class PHPCopyPasteDetector extends AbstractIntegration
     /**
      * @inheritdoc
      */
-    protected function addIssuesFromXml(Reader $xml)
+    protected function addIssuesFromXml(Reader $xml) : void
     {
         $xmlArray = $xml->parse();
 

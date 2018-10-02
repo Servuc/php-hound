@@ -29,7 +29,7 @@ class AnalysisResult
      * @param string $message Issue description.
      * @return void
      */
-    public function addIssue($fileName, $line, $toolName, $issueType, $message)
+    public function addIssue(string $fileName, int $line, string $toolName, string $issueType, string $message) : void
     {
         if (!isset($this->data[$fileName])) {
             $this->data[$fileName] = [];
@@ -50,11 +50,10 @@ class AnalysisResult
      * Check if there are any code issues.
      * @return boolean true if there are issues.
      */
-    public function hasIssues()
+    public function hasIssues() : bool
     {
         // Required by PHP 5.4
-        $array = $this->toArray();
-        return !empty($array);
+        return ! empty($this->toArray());
     }
 
     /**
@@ -70,7 +69,7 @@ class AnalysisResult
      * </code>
      * @return array result daya.
      */
-    public function toArray()
+    public function toArray() : array
     {
         $data = [];
 
@@ -93,7 +92,7 @@ class AnalysisResult
      * @param AnalysisResult $other another analysis result object.
      * @return AnalysisResult returns itself.
      */
-    public function mergeWith(AnalysisResult $other)
+    public function mergeWith(AnalysisResult $other) : AnalysisResult
     {
         foreach ($other->toArray() as $fileName => $lines) {
             foreach ($lines as $line => $issues) {
@@ -115,7 +114,7 @@ class AnalysisResult
      * Add an output filter to delegate to the analysis result object.
      * @param OutputFilterInterface $filter filter instance.
      */
-    public function setResultsFilter(OutputFilterInterface $filter)
+    public function setResultsFilter(OutputFilterInterface $filter) : void
     {
         $this->filter = $filter;
     }

@@ -25,7 +25,7 @@ class History
      * Set dependencies.
      * @param string $outputDirectory target directory path.
      */
-    public function __construct($outputDirectory)
+    public function __construct(string $outputDirectory)
     {
         $this->outputDirectory = $outputDirectory;
     }
@@ -35,7 +35,7 @@ class History
      * @param AnalysisResult $result analysis result.
      * @return void
      */
-    public function append(AnalysisResult $result)
+    public function append(AnalysisResult $result) : void
     {
         $data = $this->getData();
 
@@ -72,7 +72,7 @@ class History
      * Stores history data.
      * @return boolean true if successfully wrote to the JSON file.
      */
-    public function save()
+    public function save() : bool
     {
         $file = new SplFileObject($this->getHistoryFilePath(), 'w');
         return $file->fwrite(json_encode($this->getData()));
@@ -82,7 +82,7 @@ class History
      * Loads history data from the JSON file (or the cache if already did).
      * @return array
      */
-    public function getData()
+    public function getData() : array
     {
         if (null === $this->cachedData) {
             $data = $this->getHistoryFileContent();
@@ -101,7 +101,7 @@ class History
      * Overwrite current data.
      * @param array $data history data.
      */
-    protected function setData(array $data)
+    protected function setData(array $data) : void
     {
         $this->cachedData = $data;
     }
@@ -110,7 +110,7 @@ class History
      * History data
      * @return array
      */
-    protected function getHistoryFileContent()
+    protected function getHistoryFileContent() : array
     {
         if (!file_exists($this->getHistoryFilePath())) {
             return null;
@@ -123,7 +123,7 @@ class History
      * JSON data file path.
      * @return string file path.
      */
-    protected function getHistoryFilePath()
+    protected function getHistoryFilePath() : string
     {
         return $this->outputDirectory . '/history.json';
     }

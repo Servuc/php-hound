@@ -23,7 +23,7 @@ class FileHighlighter
      * @param string $filePath analyzed file path.
      * @param array $linesWithIssues lines with respective issues.
      */
-    public function __construct($filePath, array $linesWithIssues)
+    public function __construct(string $filePath, array $linesWithIssues)
     {
         $this->filePath = $filePath;
         $this->linesWithIssues = $linesWithIssues;
@@ -33,7 +33,7 @@ class FileHighlighter
      * Highlight PHP file showing issues and line numbers.
      * @return string HTML.
      */
-    public function getHtml()
+    public function getHtml() : string
     {
         $html = "<code><span style=\"color: #000000\">";
         $paddingLength = $this->getLineNumberPaddingLength();
@@ -60,7 +60,7 @@ class FileHighlighter
      * Ammount of characters of the number of the last line of code.
      * @return integer padding length.
      */
-    protected function getLineNumberPaddingLength()
+    protected function getLineNumberPaddingLength() : int
     {
         $lines = $this->getFormattedPHPFileLines();
         $lineCount = count($lines);
@@ -71,7 +71,7 @@ class FileHighlighter
      * Split all formatted PHP lines of code into an array.
      * @return string[] HTML splitted into an array.
      */
-    protected function getFormattedPHPFileLines()
+    protected function getFormattedPHPFileLines() : array
     {
         $code = substr(highlight_file($this->filePath, true), 36, -15);
         return explode('<br />', $code);
@@ -82,7 +82,7 @@ class FileHighlighter
      * @param integer $lineNumber line number.
      * @return string HTML.
      */
-    protected function getIssuesTooltip($lineNumber)
+    protected function getIssuesTooltip(int $lineNumber) : string
     {
         if (!isset($this->linesWithIssues[$lineNumber])) {
             return '';

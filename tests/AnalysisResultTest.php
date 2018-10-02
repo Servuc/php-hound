@@ -145,7 +145,7 @@ class AnalysisResultTest extends \PHPUnit_Framework_TestCase
 
 class FakeFilter implements OutputFilterInterface
 {
-    public function filter($data)
+    public function filter(array $data) : array
     {
         return ['filtered', 'data'];
     }

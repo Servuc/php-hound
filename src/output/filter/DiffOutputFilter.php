@@ -28,7 +28,7 @@ class DiffOutputFilter implements OutputFilterInterface
      * @param string $root root path.
      * @param SebastianBergmann\Diff\Diff[] $diffs array of diff objects.
      */
-    public function __construct($root, array $diffs)
+    public function __construct(string $root, array $diffs)
     {
         $this->root = $root;
         $this->diffs = $diffs;
@@ -37,7 +37,7 @@ class DiffOutputFilter implements OutputFilterInterface
     /**
      * @inheritdoc
      */
-    public function filter($data)
+    public function filter(array $data) : array
     {
         $filteredData = [];
 
@@ -62,7 +62,7 @@ class DiffOutputFilter implements OutputFilterInterface
      * Files touched by the diff and that received at least one new line of code.
      * @return string[] files paths.
      */
-    public function getFilesWithAddedCode()
+    public function getFilesWithAddedCode() : array
     {
         $files = [];
         foreach ($this->getDiffsWithAddedCode() as $fileDiff) {
@@ -75,7 +75,7 @@ class DiffOutputFilter implements OutputFilterInterface
      * Gets the list of files and lines touched by the diff.
      * @return array where the key is the file path and its values the lines.
      */
-    protected function getTouchedFilesAndLines()
+    protected function getTouchedFilesAndLines() : array
     {
         $resultFilter = [];
         foreach ($this->getDiffsWithAddedCode() as $fileDiff) {
@@ -104,7 +104,7 @@ class DiffOutputFilter implements OutputFilterInterface
      * Search for diffs where at least one line of code was added.
      * @return SebastianBergmann\Diff\Diff[] diffs adding code.
      */
-    protected function getDiffsWithAddedCode()
+    protected function getDiffsWithAddedCode() : array
     {
         $diffs = [];
         foreach ($this->diffs as $fileDiff) {

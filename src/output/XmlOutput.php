@@ -9,7 +9,7 @@ class XmlOutput extends AbstractOutput
     /**
      * @inheritdoc
      */
-    public function result(AnalysisResult $result)
+    public function result(AnalysisResult $result) : void
     {
         $this->cli->out($this->getXmlFor($result));
     }
@@ -19,7 +19,7 @@ class XmlOutput extends AbstractOutput
      * @param AnalysisResult $result analysis result object.
      * @return string XML contents.
      */
-    protected function getXmlFor(AnalysisResult $result)
+    protected function getXmlFor(AnalysisResult $result) : string
     {
         $writer = new Writer;
         $writer->openMemory();
@@ -32,7 +32,7 @@ class XmlOutput extends AbstractOutput
      * @param AnalysisResult $result analysis result object.
      * @return array XML following Sabre structure.
      */
-    protected function getSabreXmlArrayFor(AnalysisResult $result)
+    protected function getSabreXmlArrayFor(AnalysisResult $result) : array
     {
         $sabreXmlArray = [
             'phphound' => [],

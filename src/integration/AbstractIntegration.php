@@ -38,7 +38,7 @@ abstract class AbstractIntegration
      * @param string $binariesPath where the bin scripts are located.
      * @param string $temporaryDirPath where temporary files will be created.
      */
-    public function __construct($binariesPath, $temporaryDirPath)
+    public function __construct(string $binariesPath, string $temporaryDirPath)
     {
         $this->binariesPath = $binariesPath;
         $this->temporaryFilePath = tempnam($temporaryDirPath, 'PHP-Hound');
@@ -51,7 +51,7 @@ abstract class AbstractIntegration
      * @param array $targets target file or directory paths to be ignored.
      * @return void
      */
-    public function setIgnoredPaths(array $targets)
+    public function setIgnoredPaths(array $targets) : void
     {
         $this->ignoredPaths = $targets;
     }
@@ -60,7 +60,7 @@ abstract class AbstractIntegration
      * Analysis results for this integration.
      * @return AnalysisResult analysis result object.
      */
-    public function getAnalysisResult()
+    public function getAnalysisResult() : AnalysisResult
     {
         return $this->result;
     }
@@ -68,9 +68,9 @@ abstract class AbstractIntegration
     /**
      * Creates and execute tool command, returning output results.
      * @param string[] $targetPaths file/directory paths to be analysed.
-     * @return string CLI JSON output.
+     * @return void CLI JSON output.
      */
-    public function run($targetPaths)
+    public function run(array $targetPaths) : void
     {
         $this->executeCommand($targetPaths);
         $this->processResults();
@@ -81,7 +81,7 @@ abstract class AbstractIntegration
      * @param string[] $targetPaths file/directory paths to be analysed.
      * @return void
      */
-    protected function executeCommand($targetPaths)
+    protected function executeCommand(array $targetPaths) : void
     {
         exec($this->getCommand($targetPaths));
     }
@@ -90,7 +90,7 @@ abstract class AbstractIntegration
      * Convert tool output into PHP Hound array output.
      * @return void
      */
-    protected function processResults()
+    protected function processResults() : void
     {
         $content = $this->getOutputContent();
         if (empty($content)) {
@@ -105,7 +105,7 @@ abstract class AbstractIntegration
      * Tool raw output.
      * @return string raw output contents.
      */
-    protected function getOutputContent()
+    protected function getOutputContent() : string
     {
         return file_get_contents($this->temporaryFilePath);
     }
@@ -114,19 +114,25 @@ abstract class AbstractIntegration
      * Integration description.
      * @return string description.
      */
-    abstract public function getDescription();
+    abstract public function getDescription() : string;
 
     /**
      * Create integration command to be run on the shell.
      * @param string[] $targetPaths file/directory paths to be analysed.
      * @return string shell command.
      */
-    abstract public function getCommand($targetPaths);
+    abstract public function getCommand(array $targetPaths) : string;
+
+    /**
+     * Generate ignore arguments for command
+     * @return string Ignore arguments for command
+     */
+    abstract public function getIgnoredArgument() : string;
 
     /**
      * Read issues from the XML output.
      * @param Reader $xml XML reader object.
      * @return void
      */
-    abstract protected function addIssuesFromXml(Reader $xml);
+    abstract protected function addIssuesFromXml(Reader $xml) : void;
 }

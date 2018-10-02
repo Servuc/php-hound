@@ -23,7 +23,7 @@ abstract class AbstractOutput
      * @param CLImate $climate CLImate instance.
      * @param string $outputDirectory directory where files will be created.
      */
-    public function __construct(CLImate $climate, $outputDirectory)
+    public function __construct(CLImate $climate, string $outputDirectory)
     {
         $this->cli = $climate;
         $this->outputDirectory = $outputDirectory;
@@ -34,5 +34,5 @@ abstract class AbstractOutput
      * @param  AnalysisResult $result reduced result data.
      * @return void
      */
-    abstract public function result(AnalysisResult $result);
+    abstract public function result(AnalysisResult $result) : void;
 }

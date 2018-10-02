@@ -11,7 +11,7 @@ class ArrayHelper
      * @param Mixed $value value to be verified.
      * @return array value itself or an empty array.
      */
-    public static function ensure($value)
+    public static function ensure($value) : array
     {
         if (empty($value) || !is_array($value)) {
             return [];

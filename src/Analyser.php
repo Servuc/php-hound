@@ -54,7 +54,7 @@ class Analyser
      * @param string[] $analysedPaths target file or directory path.
      * @param string[] $ignoredPaths comma separated list of ignored directories.
      */
-    public function __construct(AbstractOutput $output, $binariesPath, $analysedPaths, $ignoredPaths)
+    public function __construct(AbstractOutput $output, string $binariesPath, array $analysedPaths, array $ignoredPaths)
     {
         $this->output = $output;
         $this->binariesPath = $binariesPath;
@@ -66,7 +66,7 @@ class Analyser
      * Run each configured PHP analysis tool.
      * @return boolean true if it didn't find code issues.
      */
-    public function run()
+    public function run() : bool
     {
         $result = $this->createResult();
         $this->trigger(
@@ -89,7 +89,7 @@ class Analyser
         $this->output->result($result);
         $this->trigger(self::EVENT_FINISHED_ANALYSIS);
 
-        return !$result->hasIssues();
+        return ! $result->hasIssues();
     }
 
     /**
@@ -98,7 +98,7 @@ class Analyser
      * @param string|null $message optional message.
      * @return void
      */
-    protected function trigger($event, $message = null)
+    protected function trigger(int $event, $message = null) : void
     {
         if ($this->output instanceof TriggerableInterface) {
             $this->output->trigger($event, $message);
@@ -109,7 +109,7 @@ class Analyser
      * Get a list of paths to be ignored by the analysis.
      * @return string[] a list of file and/or directory paths.
      */
-    public function getIgnoredPaths()
+    public function getIgnoredPaths() : array
     {
         return $this->ignoredPaths;
     }
@@ -118,7 +118,7 @@ class Analyser
      * Analysis target path.
      * @return string[] target path.
      */
-    public function getAnalysedPaths()
+    public function getAnalysedPaths() : array
     {
         return $this->analysedPaths;
     }
@@ -127,7 +127,7 @@ class Analyser
      * Add an output filter to delegate to the analysis result object.
      * @param OutputFilterInterface $filter filter instance.
      */
-    public function setResultsFilter(OutputFilterInterface $filter)
+    public function setResultsFilter(OutputFilterInterface $filter) : void
     {
         $this->resultsFilter = $filter;
     }
@@ -137,7 +137,7 @@ class Analyser
      * @param string[] $paths target paths.
      * @return void
      */
-    public function setAnalysedPaths(array $paths)
+    public function setAnalysedPaths(array $paths) : void
     {
         $this->analysedPaths = $paths;
     }
@@ -146,7 +146,7 @@ class Analyser
      * List of PHP analys integration classes.
      * @return string[] array of class names.
      */
-    protected function getAnalysisToolsClasses()
+    protected function getAnalysisToolsClasses() : string
     {
         return [
             'phphound\integration\PHPCodeSniffer',
@@ -159,7 +159,7 @@ class Analyser
      * Set of PHP analys integration objects.
      * @return phphound\integration\AbstractIntegration[] set of objects.
      */
-    protected function getAnalysisTools()
+    protected function getAnalysisTools() : array
     {
         $objects = [];
 
@@ -176,7 +176,7 @@ class Analyser
      * Create an empty analysis result.
      * @return AnalysisResult instance.
      */
-    protected function createResult()
+    protected function createResult() : AnalysisResult
     {
         return new AnalysisResult;
     }

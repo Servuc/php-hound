@@ -50,7 +50,7 @@ class Command
      * @param string $binariesPath Composer binaries path.
      * @param array $arguments command line arguments.
      */
-    public function __construct(CLImate $climate, $binariesPath, array $arguments)
+    public function __construct(CLImate $climate, string $binariesPath, array $arguments)
     {
         $this->cli = $climate;
         $this->cli->description($this->getDescription());
@@ -66,7 +66,7 @@ class Command
      * Run PHP-Hound command.
      * @return boolean true if it didn't find code issues or ran successfully.
      */
-    public function run()
+    public function run() : bool
     {
         if ($this->hasArgumentValue('help')) {
             $this->cli->usage();
@@ -95,7 +95,7 @@ class Command
      * @param string $gitDiff git diff arguments.
      * @return DiffOutputFilter filter instance.
      */
-    protected function getGitDiffFilter($gitDiff)
+    protected function getGitDiffFilter(string $gitDiff) : DiffOutputFilter
     {
         $analysedPaths = $this->getAnalysedPaths();
         $gitPath = array_shift($analysedPaths);
@@ -117,7 +117,7 @@ class Command
      * @throws UnexpectedValueException on invalid format value.
      * @return AbstractOutput
      */
-    protected function getOutput()
+    protected function getOutput() : AbstractOutput
     {
         $format = $this->getOutputFormat();
         $formatClasses = $this->getOutputFormatClasses();
@@ -140,7 +140,7 @@ class Command
      * Command line arguments list for CLImate.
      * @return array CLI list of arguments.
      */
-    protected function getArguments()
+    protected function getArguments() : array
     {
         return [
             'help' => [
@@ -187,7 +187,7 @@ class Command
      * Get a list of paths to be ignored by the analysis.
      * @return string[] a list of file and/or directory paths.
      */
-    public function getIgnoredPaths()
+    public function getIgnoredPaths() : array
     {
         $ignoredArgument = $this->getArgumentValue('ignore');
         $ignoredPaths = explode(',', $ignoredArgument);
@@ -199,7 +199,7 @@ class Command
      * @param string $pathsString the path argument value.
      * @return void
      */
-    protected function setAnalysedPathsFromString($pathsString)
+    protected function setAnalysedPathsFromString(string $pathsString) : void
     {
         $rawAnalysedPaths = explode(',', $pathsString);
         $analysedPaths = array_filter($rawAnalysedPaths);
@@ -211,7 +211,7 @@ class Command
      * @param string[] $paths target paths.
      * @return void
      */
-    protected function setAnalysedPaths(array $paths)
+    protected function setAnalysedPaths(array $paths) : void
     {
         foreach ($paths as &$path) {
             if (0 === strpos($path, DIRECTORY_SEPARATOR)) {
@@ -226,7 +226,7 @@ class Command
      * Analysis target paths.
      * @return string[] a list of analysed paths (usually just one).
      */
-    public function getAnalysedPaths()
+    public function getAnalysedPaths() : array
     {
         return $this->analysedPaths;
     }
@@ -235,7 +235,7 @@ class Command
      * Running script path.
      * @return string current script directory.
      */
-    public function getWorkingDirectory()
+    public function getWorkingDirectory() : string
     {
         return getcwd();
     }
@@ -244,7 +244,7 @@ class Command
      * Output format.
      * @return string format type.
      */
-    public function getOutputFormat()
+    public function getOutputFormat() : string
     {
         return $this->getArgumentValue('format');
     }
@@ -253,7 +253,7 @@ class Command
      * CLI output description.
      * @return string description.
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return 'PHP Hound ' . Analyser::VERSION;
     }
@@ -262,7 +262,7 @@ class Command
      * Analyser instance.
      * @return Analyser instance.
      */
-    public function getAnalyser()
+    public function getAnalyser() : Analyser
     {
         if (null === $this->analyser) {
             $this->analyser = new Analyser(
@@ -279,7 +279,7 @@ class Command
      * List of output format classes.
      * @return array array where the key is a format and its value the class.
      */
-    protected function getOutputFormatClasses()
+    protected function getOutputFormatClasses() : array
     {
         return [
             'text' => 'phphound\output\TextOutput',
@@ -295,7 +295,7 @@ class Command
      * @param string $name argument name.
      * @return Mixed argument value.
      */
-    protected function getArgumentValue($name)
+    protected function getArgumentValue(string $name)
     {
         return $this->cli->arguments->get($name);
     }
@@ -305,7 +305,7 @@ class Command
      * @param string $name argument name.
      * @return boolean if the argument has informed or not.
      */
-    protected function hasArgumentValue($name)
+    protected function hasArgumentValue(string $name) : bool
     {
         return $this->cli->arguments->defined($name, $this->arguments);
     }

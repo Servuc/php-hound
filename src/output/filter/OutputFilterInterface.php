@@ -11,5 +11,5 @@ interface OutputFilterInterface
      * @param $data array a list of the file paths and their issues.
      * @return array filtered data array.
      */
-    public function filter($data);
+    public function filter(array $data) : array;
 }

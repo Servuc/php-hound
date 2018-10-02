@@ -9,7 +9,7 @@ class CsvOutput extends AbstractOutput
     /**
      * @inheritdoc
      */
-    public function result(AnalysisResult $result)
+    public function result(AnalysisResult $result) : void
     {
         $writer = Writer::createFromString('');
         $writer->insertOne(['File', 'Line', 'Tool', 'Type', 'Message']);
